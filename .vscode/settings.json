@@ -1,4 +1,14 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "**/*.js": {"when":"$(basename).ts"}
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/*.js": {"when": "$(basename).ts"},
+        "**/*.js.map": true
+    },
+
+    "typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib"
+    
 }
