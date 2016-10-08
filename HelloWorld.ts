@@ -1,12 +1,13 @@
 import rx = require("rx");
 import http = require("http");
 import xhr = require("xhr2");
+import p = require("es6-promise");
 
 class Startup {
     public static main() : number {
         
         var s = new Startup();
-        s.observer3();
+        s.observer4();
         //s.getHttp();
         console.log("Done..");
         
@@ -65,6 +66,38 @@ class Startup {
         }, {sum: 0, count:0 }).map(o => o.sum / o.count);
 
         s.subscribe(x => console.log("Average is" + x));
+    }
+
+    public observer4() {
+
+        var x = new xhr();
+        x.open("GET", "http://127.0.0.1:8080/Member/GetAll");
+
+        x.onload = (e) => {
+            var o = JSON.parse(x.responseText) as Array<Models.GM_MEDLE>;
+
+            o.forEach(element => {
+                console.log(element.GM_EMAIL);
+            });
+        };
+
+        x.send(null);
+
+        
+
+        // new p.Promise((resolve, reject) => {
+
+        //     http.get("http://127.0.0.1:8080/Member/Get/2111600379", (res) => {
+        //         console.log(`Got response: ${res.statusCode}`);
+        //         resolve(res.read());
+        //     }).on("error", (e) => {
+        //         reject(`Got error ${e.message}`);
+        //     });
+        // }).then((val) => {
+        //     console.log("Success ");
+        //     console.log(val);        
+        // });
+        
     }
 
     public getHttp(){

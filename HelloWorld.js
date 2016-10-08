@@ -1,12 +1,13 @@
 "use strict";
 var rx = require("rx");
 var http = require("http");
+var xhr = require("xhr2");
 var Startup = (function () {
     function Startup() {
     }
     Startup.main = function () {
         var s = new Startup();
-        s.observer3();
+        s.observer4();
         //s.getHttp();
         console.log("Done..");
         return 0;
@@ -44,6 +45,28 @@ var Startup = (function () {
             };
         }, { sum: 0, count: 0 }).map(function (o) { return o.sum / o.count; });
         s.subscribe(function (x) { return console.log("Average is" + x); });
+    };
+    Startup.prototype.observer4 = function () {
+        var x = new xhr();
+        x.open("GET", "http://127.0.0.1:8080/Member/GetAll");
+        x.onload = function (e) {
+            var o = JSON.parse(x.responseText);
+            o.forEach(function (element) {
+                console.log(element.GM_EMAIL);
+            });
+        };
+        x.send(null);
+        // new p.Promise((resolve, reject) => {
+        //     http.get("http://127.0.0.1:8080/Member/Get/2111600379", (res) => {
+        //         console.log(`Got response: ${res.statusCode}`);
+        //         resolve(res.read());
+        //     }).on("error", (e) => {
+        //         reject(`Got error ${e.message}`);
+        //     });
+        // }).then((val) => {
+        //     console.log("Success ");
+        //     console.log(val);        
+        // });
     };
     Startup.prototype.getHttp = function () {
         http.get("http://www.google.com/index.html", function (res) {
