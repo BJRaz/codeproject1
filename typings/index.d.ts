@@ -1,4 +1,5 @@
 /// <reference path="globals/node/index.d.ts" />
+/// <reference path="globals/rx-dom/index.d.ts" />
 /// <reference path="globals/rx-lite/index.d.ts" />
 /// <reference path="globals/rx.aggregates/index.d.ts" />
 /// <reference path="globals/rx.all/index.d.ts" />

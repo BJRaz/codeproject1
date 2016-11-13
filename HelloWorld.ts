@@ -1,13 +1,15 @@
-import rx = require("rx");
+import Rx = require("rx");
+import "rx-dom";
 import http = require("http");
 import xhr = require("xhr2");
-import p = require("es6-promise");
+import { Promise } from "es6-promise";
 
 class Startup {
+
     public static main() : number {
         
         var s = new Startup();
-        s.observer4();
+        s.observer5();
         //s.getHttp();
         console.log("Done..");
         
@@ -21,27 +23,27 @@ class Startup {
     }
 
     public observer1(){
-        rx.Observable.just("Hello world").subscribe((value) => {
+        Rx.Observable.just("Hello world").subscribe((value) => {
             console.log("Hello world " + value);
         });
 
         var arr = new Array("Brian", "Hans", "Jens", "Brian");
 
-        rx.Observable.from(arr).distinct().subscribe(value => {
+        Rx.Observable.from(arr).distinct().subscribe(value => {
             console.log(value);            
         });
     }
 
     public observer2(){
 
-        var o = rx.Observable.create((observer) => {
+        var o = Rx.Observable.create((observer) => {
             observer.onNext("Brian");
             observer.onNext("Jens");
             observer.onNext("Hans");
             observer.onCompleted();
         });
 
-        var observer = rx.Observer.create(
+        var observer = Rx.Observer.create(
             (x) => { console.log(x); },
             (err) => { console.log("Error" + err)},
             () => { console.log("Completed" )}
@@ -52,7 +54,7 @@ class Startup {
     }
 
     public observer3() {
-        var src = rx.Observable.range(1,5);
+        var src = Rx.Observable.range(1,5);
         var sum = src.reduce((acc,x) => acc + x);
         
 
@@ -76,27 +78,36 @@ class Startup {
         x.onload = (e) => {
             var o = JSON.parse(x.responseText) as Array<Models.GM_MEDLE>;
 
-            o.forEach(element => {
-                console.log(element.GM_EMAIL);
-            });
+            o.map(element => element.GM_PNAVN.split(' ')).forEach(elm => console.log(elm[0]));
         };
 
         x.send(null);
 
         
 
-        // new p.Promise((resolve, reject) => {
+        new Promise((resolve, reject) => {
 
-        //     http.get("http://127.0.0.1:8080/Member/Get/2111600379", (res) => {
-        //         console.log(`Got response: ${res.statusCode}`);
-        //         resolve(res.read());
-        //     }).on("error", (e) => {
-        //         reject(`Got error ${e.message}`);
-        //     });
-        // }).then((val) => {
-        //     console.log("Success ");
-        //     console.log(val);        
-        // });
+            http.get("http://127.0.0.1:8080/Member/Get/2111600379", (res) => {
+                console.log(`Got response: ${res.statusCode}`);
+
+                res.on("readable", () => {
+                    console.log(1);
+                    resolve(res.read());
+                });
+
+                
+            }).on("error", (e) => {
+                reject(`Got error ${e.message}`);
+            });
+        }).then((val) => {
+            console.log("Success ");
+            console.log(val);        
+        });
+        
+    }
+
+    public observer5() {
+        Rx.DOM.get("http://127.0.0.1:8080/Member/GetAll").subscribe((value) => { console.log(value)}, (err) => { console.log(err)})
         
     }
 
