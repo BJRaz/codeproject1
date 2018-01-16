@@ -1,6 +1,6 @@
 import Rx = require("rx");
 import "rx-dom";
-import http = require("http");
+/*import http = require("http");*/
 import xhr = require("xhr2");
 import { Promise } from "es6-promise";
 
@@ -9,11 +9,11 @@ class Startup {
     public static main() : number {
         
         var s = new Startup();
-        s.observer5();
+        //s.observer5();
         //s.getHttp();
         console.log("Done..");
         
-
+        
 
         return 0;
     }
@@ -85,7 +85,7 @@ class Startup {
 
         
 
-        new Promise((resolve, reject) => {
+        /*new Promise((resolve, reject) => {
 
             http.get("http://127.0.0.1:8080/Member/Get/2111600379", (res) => {
                 console.log(`Got response: ${res.statusCode}`);
@@ -102,7 +102,7 @@ class Startup {
         }).then((val) => {
             console.log("Success ");
             console.log(val);        
-        });
+        });*/
         
     }
 
@@ -113,12 +113,12 @@ class Startup {
 
     public getHttp(){
         
-        http.get("http://www.google.com/index.html", (res) => {
+        /*http.get("http://www.google.com/index.html", (res) => {
             console.log(`Got response: ${res.statusCode}`);
             res.resume();
         }).on("error", (e) => {
             console.log(`Got error ${e.message}`);
-        });
+        });*/
     }
 }
 /**

@@ -1,15 +1,15 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Rx = require("rx");
 require("rx-dom");
-var http = require("http");
+/*import http = require("http");*/
 var xhr = require("xhr2");
-var es6_promise_1 = require("es6-promise");
-var Startup = (function () {
+var Startup = /** @class */ (function () {
     function Startup() {
     }
     Startup.main = function () {
         var s = new Startup();
-        s.observer5();
+        //s.observer5();
         //s.getHttp();
         console.log("Done..");
         return 0;
@@ -56,31 +56,35 @@ var Startup = (function () {
             o.map(function (element) { return element.GM_PNAVN.split(' '); }).forEach(function (elm) { return console.log(elm[0]); });
         };
         x.send(null);
-        new es6_promise_1.Promise(function (resolve, reject) {
-            http.get("http://127.0.0.1:8080/Member/Get/2111600379", function (res) {
-                console.log("Got response: " + res.statusCode);
-                res.on("readable", function () {
+        /*new Promise((resolve, reject) => {
+
+            http.get("http://127.0.0.1:8080/Member/Get/2111600379", (res) => {
+                console.log(`Got response: ${res.statusCode}`);
+
+                res.on("readable", () => {
                     console.log(1);
                     resolve(res.read());
                 });
-            }).on("error", function (e) {
-                reject("Got error " + e.message);
+
+                
+            }).on("error", (e) => {
+                reject(`Got error ${e.message}`);
             });
-        }).then(function (val) {
+        }).then((val) => {
             console.log("Success ");
             console.log(val);
-        });
+        });*/
     };
     Startup.prototype.observer5 = function () {
         Rx.DOM.get("http://127.0.0.1:8080/Member/GetAll").subscribe(function (value) { console.log(value); }, function (err) { console.log(err); });
     };
     Startup.prototype.getHttp = function () {
-        http.get("http://www.google.com/index.html", function (res) {
-            console.log("Got response: " + res.statusCode);
+        /*http.get("http://www.google.com/index.html", (res) => {
+            console.log(`Got response: ${res.statusCode}`);
             res.resume();
-        }).on("error", function (e) {
-            console.log("Got error " + e.message);
-        });
+        }).on("error", (e) => {
+            console.log(`Got error ${e.message}`);
+        });*/
     };
     return Startup;
 }());
