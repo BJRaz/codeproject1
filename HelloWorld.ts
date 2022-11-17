@@ -4,16 +4,35 @@ import "rx-dom";
 import xhr = require("xhr2");
 import { Promise } from "es6-promise";
 
+import { Observable, Observer } from "rx";
+
 class Startup {
 
     public static main() : number {
         
         var s = new Startup();
+
+        s.observer4();
+
         //s.observer5();
         //s.getHttp();
+              
+        var obs = Observable.create((observer: any) => {
+            observer.onNext(1);
+            observer.onNext(2);
+            observer.onNext(3);
+            observer.onNext(4);
+            observer.onCompleted();
+        });
+
+        obs.subscribe(Observer.create((value) => {
+                console.log(value);
+        }));
+
+        
+
         console.log("Done..");
-        
-        
+
 
         return 0;
     }
@@ -73,12 +92,12 @@ class Startup {
     public observer4() {
 
         var x = new xhr();
-        x.open("GET", "http://127.0.0.1:8080/Member/GetAll");
+        x.open("GET", "http://127.0.0.1:8080/Member/SearchByName/Hans A");
 
         x.onload = (e) => {
             var o = JSON.parse(x.responseText) as Array<Models.GM_MEDLE>;
-
-            o.map(element => element.GM_PNAVN.split(' ')).forEach(elm => console.log(elm[0]));
+            
+            o.map(element => element.GM_PNAVN).forEach(elm => console.log(elm));
         };
 
         x.send(null);

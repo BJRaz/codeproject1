@@ -5,8 +5,8 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
-        // "**/*.js": {"when": "$(basename).ts"},
-        "**/*.js.map": true
+        "**/*.js": {"when": "$(basename).ts"},
+        "**/*.js.map": true,
     }
 
     //"typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib"
